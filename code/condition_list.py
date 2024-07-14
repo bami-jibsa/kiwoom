@@ -21,4 +21,4 @@ def condition_list(num):
 # condition_list()
 a = condition_list(4)
 
-print (a)
+# print (a)

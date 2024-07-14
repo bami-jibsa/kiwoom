@@ -6,7 +6,7 @@ import time
 import win32gui
 import win32con
 
-class Kiwoom:
+class Kiwoom2:
     def __init__(self):
         self.ocx = QAxWidget("KHOPENAPI.KHOpenAPICtrl.1")
         self.login = False
@@ -68,6 +68,11 @@ class Kiwoom:
         ret = self.ocx.dynamicCall("GetMasterLastPrice(QString)", code)
         return int(ret) 
     
+def login():
+    kiwoom = Kiwoom()
+    kiwoom.CommConnect()
+    # print("블록킹 로그인 완료")
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     kiwoom = Kiwoom()
