@@ -211,3 +211,8 @@ class Kiwoom1(QAxWidget):
 
     def cancel_screen_number(self, sScrNo):
         self.dynamicCall("DisconnectRealData(QString)", sScrNo)
+if __name__ == "__main__":
+    print(f"총매입금액: {Kiwoom1.total_buy_money}원")
+    print(f"총평가금액: {Kiwoom1.total_evaluation_money}원")
+    print(f"총평가손익금액: {Kiwoom1.total_evaluation_profit_and_loss_money}원")
+    print(f"총수익률: {Kiwoom1.total_yield}%")

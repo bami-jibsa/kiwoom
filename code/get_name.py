@@ -2,7 +2,11 @@ from pykiwoom.kiwoom import *
 
 kiwoom = Kiwoom()
 kiwoom.CommConnect(block=True)
+def get_name(num):
+    name = kiwoom.GetMasterCodeName(f"{num}")
 
-name = kiwoom.GetMasterCodeName("005930")
+    return name
+n = '005930'
+name = get_name(int(n))
 print(name)
 

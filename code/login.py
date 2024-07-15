@@ -69,13 +69,15 @@ class Kiwoom2:
         return int(ret) 
     
 def login():
-    kiwoom = Kiwoom()
+    app = QApplication(sys.argv)
+    
+    kiwoom = Kiwoom2()
     kiwoom.CommConnect()
     # print("블록킹 로그인 완료")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    kiwoom = Kiwoom()
+    kiwoom = Kiwoom2()
     
     # 자동 로그인 정보 (비밀번호만 입력)
     user_password = "tls4637"
