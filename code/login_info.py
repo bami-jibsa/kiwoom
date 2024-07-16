@@ -1,11 +1,11 @@
 import sys
 from PyQt5.QtWidgets import *
-from login import Kiwoom
+from login import Kiwoom2
 
 def log_info():
         app = QApplication(sys.argv)
 
-        kiwoom = Kiwoom()
+        kiwoom = Kiwoom2()
         kiwoom.CommConnect()    
 
         accno = kiwoom.GetLoginInfo("ACCNO")   # 전체 계좌 반환

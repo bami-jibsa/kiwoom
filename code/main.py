@@ -1,6 +1,9 @@
 import sys
 
+import pandas as pd
 
+import datetime
+from openpyxl import load_workbook
 from login import login, Kiwoom2
 
 # Kiwoom1 = Kiwoom1()
@@ -33,7 +36,52 @@ from stock_sell import place_limit_sell_order, place_market_sell_order
 
 from get_name import get_name
 
+
 input = sys.stdin.readline
+
+
+def xl(type__, name, num, price):
+    if type__:
+        type__ = "매수"
+    else:
+        type__ = "매도"
+
+    name = name
+    now = datetime.datetime.now()
+    fom_t =  now.strftime("%y.%m.%d.%H.%M")
+
+    if price:
+        new_data = {
+            fom_t : [f"지정가-{type__}", name, num, price]
+        }
+    else:
+        new_data = {
+            fom_t : [f"시장가-{type__}", name, num, "--"]
+        }
+
+    # 새 데이터를 데이터프레임으로 변환
+    new_df = pd.DataFrame.from_dict(new_data, orient='index', columns=['Value1', 'Value2', 'Value3', 'Value4', 'Value5', 'Value6', 'Value7'])
+
+    # 기존 엑셀 파일 읽기
+    file_path = 'output.xlsx'
+    book = load_workbook(file_path)
+    writer = pd.ExcelWriter(file_path, engine='openpyxl')
+    writer.book = book
+
+    # 기존 시트 데이터 불러오기
+    existing_df = pd.read_excel(file_path, index_col=0)
+
+    # 기존 데이터에 새 데이터 추가
+    updated_df = pd.concat([existing_df, new_df])
+
+    # 데이터를 엑셀 파일에 다시 저장
+    updated_df.to_excel(writer, index=True, index_label='Key')
+
+    # 파일 저장 및 닫기
+    writer.save()
+    writer.close()
+
+    print("엑셀 파일에 데이터가 성공적으로 추가되었습니다.")
 
 
 def start():
@@ -96,13 +144,22 @@ def start():
         print(f"총평가손익금액: {Kiwoom1.total_evaluation_profit_and_loss_money}원")
         print(f"총수익률: {Kiwoom1.total_yield}%")
 
-def outo_start(num):
-    cond_li = condition_list(num)
-    
+def auto_start(num):
+    for i in range(1, 4):
+        cond_li = condition_list(num)
+        buy_code = cond_li[i-1]
+
+        qtt = ((int(Kiwoom1.total_evaluation_money) - int(Kiwoom1.total_buy_money))/3)/int(last_price(buy_code))
+
+        for _ in range(3):
+            place_market_buy_order(i, buy_code, (qtt/3))
+
 print("자동(1)/수동(0)")    
 if __name__ == "__main__":
     type_ = input()
     if type_:
-        pass
+        print("조건식 번호")
+        num = int(input())
+        auto_start(num)
     else:
         start()

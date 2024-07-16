@@ -70,7 +70,7 @@ class Kiwoom2:
     
 def login():
     app = QApplication(sys.argv)
-    
+    l
     kiwoom = Kiwoom2()
     kiwoom.CommConnect()
     # print("블록킹 로그인 완료")
