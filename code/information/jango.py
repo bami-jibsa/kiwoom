@@ -20,7 +20,7 @@ import sys
 import os
 from PyQt5.QAxContainer import *
 from PyQt5.QtCore import *
-from config import *
+from config import errors
 
 
 class Kiwoom1(QAxWidget):
